@@ -20,4 +20,11 @@ app.use(express.static("assets"))
 app.use(cookieParser())
 
 
-export { app }
+//routes import
+import userRouter from "./routes/user.routes.js"
+//routes declaration
+app.use("/api/v1/users",userRouter) //used use coz you have to call a middleware
+
+//now the url will be
+// https://localhost:8000/api/v1/users/register
+export default app
