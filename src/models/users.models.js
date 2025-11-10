@@ -41,6 +41,7 @@ const user=new mongoose.Schema({
         type: String,
         required: [true, 'Password is required']
     },
+    //long lived token
     refreshToken:{
         type: String 
     }
@@ -53,12 +54,12 @@ user.pre("save",async function (next) {
     next()
 })
 //custom method
-user.methods.isPasswrodCorrect= async function(password){
+user.methods.isPasswordCorrect= async function(password){
     return await bcrypt.compare(password,this.password)
 }
 
-//access-token method
-user.methods.generateAcessToken=function(){
+//access-token method- short lived token
+user.methods.generateAccessToken=function(){
     jwt.sign({
         _id: this._id,
         email : this.email,
