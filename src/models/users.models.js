@@ -60,7 +60,7 @@ user.methods.isPasswordCorrect= async function(password){
 
 //access-token method- short lived token
 user.methods.generateAccessToken=function(){
-    jwt.sign({
+    return jwt.sign({
         _id: this._id,
         email : this.email,
         username : this.username,
@@ -74,7 +74,7 @@ user.methods.generateAccessToken=function(){
 }
 //refresh token method
 user.methods.generateRefreshToken=function(){
-    jwt.sign({
+    return jwt.sign({
         _id: this._id,
         email : this.email,
         username : this.username,
