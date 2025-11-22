@@ -6,6 +6,7 @@ import {User} from "../models/users.models.js"
 import {uploadOnCloudinary} from "../utils/cloudinary.js"
 import {apiResponse} from "../utils/apiResponse.js";
 import jwt from "jsonwebtoken"
+import mongoose from "mongoose"
 
 //for login 
 const generateAcessAndRefreshTokens= async(userId) =>
@@ -153,8 +154,8 @@ const logoutUser=asyncHandler(async(req,res)=>{
       await User.findByIdAndUpdate(
         req.user._id,
         {
-            $set:{
-                refreshToken: undefined
+            $unset:{
+                refreshToken: 1
             },
             
         },
@@ -236,7 +237,7 @@ const updateAccountDetails= asyncHandler(async(req,res)=>{
     if(!email || !fullName){
         throw new apierror(401,"email or fullName didn't find")
     }
-    const user=User.findByIdAndUpdate(
+    const user=await User.findByIdAndUpdate(
         req.user?._id,
         {
             $set:{
